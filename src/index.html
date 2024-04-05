@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <input id="calc-display" 
                         readonly 
-                        class="form-control form-control-lg" 
+                        class="form-control form-control-lg text-end" 
                         type="text" 
                         aria-label=".form-control-lg example">
                     <div class="row gx-1">
@@ -96,7 +96,7 @@
                         </div>
                         <div class="col-3">
                             <button type="button" class="btn btn-light w-100 mt-2 border">
-                                −
+                                -
                             </button>
                         </div>
                         <div class="col-3">
@@ -126,5 +126,47 @@
     </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const display = document.getElementById("calc-display");
+            const buttons = document.getElementsByClassName("btn");
+
+            let currentValue = "";
+
+            function evaluateResult()
+            {
+                const convertedValue = currentValue
+                .replace("×","*")
+                .replace("÷","/")
+                .replace("%","*0.01");
+                const result = eval(convertedValue);
+                currentValue = result.toString();
+                display.value = currentValue;
+            }
+
+            for(let i=0; i<buttons.length; i++)
+            {
+                const button = buttons[i];
+                button.addEventListener("click",function(){
+                    const value = button.innerText;
+                    if(value == "AC")
+                    {
+                        currentValue = "";
+                        display.value = currentValue;
+                    }
+                    else if (value == "=")
+                    {
+                        evaluateResult();
+                    }
+                    else 
+                    {
+                        currentValue += value;
+                        display.value = currentValue;
+                    }
+                });
+            }
+        });
+        
+    </script>
 </body>
 </html>
